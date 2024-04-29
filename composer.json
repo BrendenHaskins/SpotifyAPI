@@ -1,0 +1,12 @@
+{
+  "name": "brendenshaskins/328/SpotifyAPI",
+  "authors": [
+    {
+      "name": "Brenden Haskins",
+      "email": "haskins.brenden@student.greenriver.edu"
+    }
+  ],
+  "require": {
+    "bcosca/fatfree-core": "dev-master"
+  }
+}
