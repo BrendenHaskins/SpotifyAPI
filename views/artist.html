@@ -9,14 +9,18 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
 <body>
+<div class="container text-center">
+    <h1>Request Outbound...</h1>
+    <br>
+    <a>Artist Name: {{ @SESSION.artistName }}</a>
+    <br>
+    <a>Genre(s):</a>
+    <repeat group = "{{ @SESSION.genre }}" key="{{ @genre }}" value = "{{ @value }}">
+        <li>{{ @value }}</li>
+    </repeat>
+    <br>
+    <hr>
 
-    <div class="container text-center">
-        <h1 class="my-3">Spotify API Proof of Concept</h1>
-        <a>Use the button below to get a token from the API.</a>
-
-        <form method="post" action="#">
-            <button type="submit" class="btn btn-primary">Get a Token!</button>
-        </form>
-    </div>
+</div>
 </body>
 </html>
