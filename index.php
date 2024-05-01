@@ -28,9 +28,8 @@ $f3->route('GET|POST /', function($f3){
 
 $f3->route('GET|POST /token', function($f3){
     if($_SERVER['REQUEST_METHOD'] == 'GET') {
-        //GET method: shows the token page. Could probably get rid of this
         $view = new Template();
-        echo $view->render('views/token.html');
+        echo $view->render('views/token.html').var_dump($f3->get('SESSION.debug'));
     } else {
         makeArtistInfoRequest($_POST['url'], $f3);
         $view = new Template();

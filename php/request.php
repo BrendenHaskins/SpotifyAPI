@@ -26,15 +26,16 @@ function getToken($f3): void {
     curl_close($curl);
 
     if(is_string($response)) {
-        $f3->set('SESSION.SpotifyToken',$response);
-
-        $jsonResult = json_decode($f3->get('SESSION.SpotifyToken'),true);
+        $jsonResult = json_decode($response,true);
         $prepToken = $jsonResult['accessToken'];
         $f3->set('SESSION.accessToken', $prepToken);
-        var_dump($f3->get('SESSION.accessToken'));
+
+        //debugging
+        $f3->set('SESSION.debug', "TOKEN RECEIVED");
     } else {
         if($response === false) {
             echo "fatal issue reaching Spotify API: did not receive token.";
+            $f3->set('SESSION.debug', "NO RESPONSE");
         }
     }
 }

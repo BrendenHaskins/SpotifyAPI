@@ -1,5 +1,5 @@
 composer.lock
 tmp/
 vendor/
-php/
+php/secrets.php
 .htaccess
