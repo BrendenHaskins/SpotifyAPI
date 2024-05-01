@@ -1,3 +1,4 @@
+<!-- Brenden Haskins        Users will submit this page's form to make a guess. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,16 +11,10 @@
 </head>
 <body>
 <div class="container text-center">
-    <h1>Request Outbound...</h1>
-    <br>
-    <a>Artist Name: {{ @SESSION.artistName }}</a>
-    <br>
-    <a>Genre(s):</a>
-    <repeat group = "{{ @SESSION.genre }}" key="{{ @genre }}" value = "{{ @value }}">
-        <li>{{ ucfirst(@value) }}</li>
-    </repeat>
-    <br>
-    <hr>
+    <form method="post" action="#">
+        <label for="artistName">Guess an Artist!</label>
+        <input type="text" name="artistName" id="artistName">
+    </form>
 
 </div>
 </body>
