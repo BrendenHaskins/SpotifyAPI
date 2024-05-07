@@ -7,7 +7,7 @@ ini_set('display_errors',1);
 error_reporting(E_ALL);
 
 //requirements
-require('php/request.php');
+require('model/request.php');
 require_once('vendor/autoload.php');
 
 //instantiate base F3 base class
