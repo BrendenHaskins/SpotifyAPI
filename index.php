@@ -24,6 +24,7 @@ $f3->route('GET|POST /', function($f3){
         selectHiddenArtist($f3);
 
         $printArtist = $f3->get('SESSION.hiddenArtist');
+        getHiddenArtistInfo($f3);
         echo $view->render('views/home.html').$printArtist;
     }
 });

@@ -129,25 +129,16 @@ function selectHiddenArtist($f3): void
     $f3->set('SESSION.hiddenArtist', $artists[$artistIndex]);
 }
 
+//get hidden artist's info to compare against guesses
+function getHiddenArtistInfo($f3): void {
+    $rawArtist = $f3->get('SESSION.hiddenArtist');
 
-//makes a basic request for information given a typical spotify URL.
-function makeArtistInfoRequest($url, $f3): void {
-    $badUrl = $url;
-
-    $urlArray = explode("/",$badUrl);
-
-    $lastIndex = sizeof($urlArray);
-
-    $urlSuffix = $urlArray[$lastIndex-1];
-
-    $goodUrl = "https://api.spotify.com/v1/artists/".$urlSuffix;
+    $linkSafeArtist = str_replace(' ','+',$rawArtist);
 
     $curl = curl_init();
 
-    $token = //WHAT TO PUT HERE?
-
     curl_setopt_array($curl, array(
-        CURLOPT_URL => $goodUrl,
+        CURLOPT_URL => 'https://api.spotify.com/v1/search?q=artist%3A'.$linkSafeArtist.'&type=artist&limit=1',
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
@@ -161,8 +152,22 @@ function makeArtistInfoRequest($url, $f3): void {
     ));
 
     $response = curl_exec($curl);
-    var_dump($response);
-    curl_close($curl);
+
+    $firstArray = json_decode($response, true);
+    $secondArray = $firstArray['artists']['items'][0];
+    $popularity = $secondArray['popularity'];
+    $genres = $secondArray['genres'];
+    $lookupAPILink = $secondArray['href'];
+
+    //TODO: Use the $lookupAPILink to fetch top songs, other info
+    var_dump($popularity);
+    echo "<hr>";
+    var_dump($genres);
+    echo "<hr>";
+    var_dump($lookupAPILink);
+
+
+
 }
 
 function searchForArtist($artistName, $f3): bool {
