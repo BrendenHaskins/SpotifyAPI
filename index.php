@@ -16,9 +16,15 @@ $f3 = Base::instance();
 //define default route
 $f3->route('GET|POST /', function($f3){
     if($_SERVER['REQUEST_METHOD'] == 'GET') {
-        //GET method: just show the home page.
+        //TESTING: run all necessary functions to choose a hidden artist. Display that artist.
+
         $view = new Template();
-        echo $view->render('views/home.html').getToken($f3).getAllArtistsFromPlaylist('2o7xQn5eHWYpoNziBkcxEL',$f3);
+        getToken($f3);
+        getAllArtistsFromSetUrl($f3);
+        selectHiddenArtist($f3);
+
+        $printArtist = $f3->get('SESSION.hiddenArtist');
+        echo $view->render('views/home.html').$printArtist;
     }
 });
 //run fat free

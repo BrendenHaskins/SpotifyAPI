@@ -63,23 +63,74 @@ function getAllArtistsFromPlaylist($url, $f3): void {
     $trimmedTemp = $temp['tracks']['items'];
 
     $jsonArray = array();
-    $outputArray = array();
+    $artistArray = array();
 
     foreach($trimmedTemp as $entry) {
         $jsonArray[] = $entry['track']['artists'];
     }
 
     foreach($jsonArray as $entry) {
-        $outputArray[] = $entry[0]['name'];
+        $artistArray[] = $entry[0]['name'];
     }
 
-    var_dump($outputArray);
-    //TODO: Change return type
+    $outputArray = array_unique($artistArray);
+
+    $f3->set('SESSION.artists',$outputArray);
+}
+
+//returns all artists in a static playlist. Change the URL variable to change the set playlist.
+function getAllArtistsFromSetUrl($f3): void {
+    //Rolling Stone: Top 100 Artists
+    $url = '6GBQBVorVOZQo7qaMBAiyu';
+
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://api.spotify.com/v1/playlists/'.$url.
+            '?market=ES&fields=tracks.items%28track%28artists%28name%29%29',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_HTTPHEADER => array(
+            'Authorization: Bearer '.$f3->get('SESSION.token')
+        ),
+    ));
+
+    $response = curl_exec($curl);
+    $temp = json_decode($response, true);
+    $trimmedTemp = $temp['tracks']['items'];
+
+    $jsonArray = array();
+    $artistArray = array();
+
+    foreach($trimmedTemp as $entry) {
+        $jsonArray[] = $entry['track']['artists'];
+    }
+
+    foreach($jsonArray as $entry) {
+        $artistArray[] = $entry[0]['name'];
+    }
+
+    $outputArray = array_unique($artistArray);
+
+    $f3->set('SESSION.artists',$outputArray);
+}
+
+//accesses f3 SESSION.artists to randomly select an artist to hide.
+function selectHiddenArtist($f3): void
+{
+
+    $artistIndex = rand(0,100);
+    $artists = $f3->get('SESSION.artists');
+
+    $f3->set('SESSION.hiddenArtist', $artists[$artistIndex]);
 }
 
 
 //makes a basic request for information given a typical spotify URL.
-//TODO: Revisit this function or delete it.
 function makeArtistInfoRequest($url, $f3): void {
     $badUrl = $url;
 
@@ -112,5 +163,9 @@ function makeArtistInfoRequest($url, $f3): void {
     $response = curl_exec($curl);
     var_dump($response);
     curl_close($curl);
+}
+
+function searchForArtist($artistName, $f3): bool {
+    return false;
 }
 
