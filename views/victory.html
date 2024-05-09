@@ -39,18 +39,7 @@
 </nav>
 
 <div class="container text-center">
-    <h1 class="my-5">I'm thinking of an artist. A pretty popular one.</h1>
-
-
-    <form action = "#" method ="post">
-        <label for="guess">Your Guess:</label>
-        <input type="text" id="guess" name="guess" placeholder="Taylor Swift">
-        <button type="submit" class="btn btn-primary">GUESS</button>
-    </form>
-
-    <repeat group = "@SESSION.allGuesses" value = "{{ @guess }}">
-        <h2>You guessed: {{ @guess }}</h2>
-    </repeat>
+    <h1>You guessed correctly! It took {{ @SESSION.guessCount }} guesses.</h1>
 </div>
 </body>
 </html>

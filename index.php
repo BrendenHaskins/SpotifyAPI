@@ -16,7 +16,10 @@ $f3 = Base::instance();
 //define default route
 $f3->route('GET|POST /', function($f3){
     if($_SERVER['REQUEST_METHOD'] == 'GET') {
-        //TESTING: run all necessary functions to choose a hidden artist. Display that artist.
+        //Present the guess screen, print all former guesses.
+        $f3->set('SESSION.guessCount',0);
+        $f3->set('SESSION.allGuesses',array());
+
 
         $view = new Template();
         getToken($f3);
@@ -26,6 +29,35 @@ $f3->route('GET|POST /', function($f3){
         $printArtist = $f3->get('SESSION.hiddenArtist');
         getHiddenArtistInfo($f3);
         echo $view->render('views/home.html').$printArtist;
+    }
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        //A guess has been submitted.
+        $oldCount = $f3->get('SESSION.guessCount');
+        $f3->set('SESSION.guessCount', $oldCount+1);
+
+        $userGuess = $_POST['guess'];
+
+        $allGuesses[] = $f3->get('SESSION.allGuesses');
+        $allGuesses[] = $userGuess;
+        $f3->set('SESSION.allGuesses',$allGuesses);
+
+        $hiddenArtist = $f3->get('SESSION.hiddenArtist');
+
+        if($userGuess == $hiddenArtist) {
+            $f3->reroute('victory');
+        } else {
+            $view = new Template();
+            echo $view->render('views/home.html');
+        }
+    }
+});
+
+$f3->route('GET|POST /victory', function($f3) {
+    if($_SERVER['REQUEST_METHOD'] == 'GET') {
+        //User got it right.
+
+        $view = new Template();
+        echo $view->render('views/victory.html');
     }
 });
 //run fat free
