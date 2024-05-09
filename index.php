@@ -18,7 +18,8 @@ $f3->route('GET|POST /', function($f3){
     if($_SERVER['REQUEST_METHOD'] == 'GET') {
         //Present the guess screen, print all former guesses.
         $f3->set('SESSION.guessCount',0);
-        $f3->set('SESSION.allGuesses',array());
+
+        $f3->set('allGuesses',array('first','second'));
 
 
         $view = new Template();
@@ -37,9 +38,7 @@ $f3->route('GET|POST /', function($f3){
 
         $userGuess = $_POST['guess'];
 
-        $allGuesses[] = $f3->get('SESSION.allGuesses');
-        $allGuesses[] = $userGuess;
-        $f3->set('SESSION.allGuesses',$allGuesses);
+        $f3->set('allGuesses',$f3->get('allGuesses').$userGuess);
 
         $hiddenArtist = $f3->get('SESSION.hiddenArtist');
 

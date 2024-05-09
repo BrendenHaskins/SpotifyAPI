@@ -48,7 +48,7 @@
         <button type="submit" class="btn btn-primary">GUESS</button>
     </form>
 
-    <repeat group = "@SESSION.allGuesses" value = "{{ @guess }}">
+    <repeat group = "{{ @allGuesses }}" value = "{{ @guess }}">
         <h2>You guessed: {{ @guess }}</h2>
     </repeat>
 </div>
