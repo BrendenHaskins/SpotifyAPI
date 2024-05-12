@@ -1,0 +1,86 @@
+/* Common colors for entire application */
+
+:root {
+    /* gradients */
+    --gradient-home-colors: linear-gradient(#1db954ff 0%, #1e1e1eff 24.500000476837158%);
+    --gradient-halfright-answer: linear-gradient(#ffcc15bf 0%, #1e1e1eff 100%);
+    --gradient-right-answer: linear-gradient(#1db954bf 0%, #1e1e1eff 100%);
+    --gradient-wrong-answer: linear-gradient(#fc0101bf 0%, #1e1e1eff 100%);
+
+    /* solid colors */
+    --spotify-green: #1DB954;
+    --spotify-gray: #191414;
+    --alt-green: #1ED660;
+    --alt-primary-gray: #1E1E1E;
+    --text-input-gray: #323232;
+}
+
+/* Defaulting font choices */
+h1, h2, h3, h4, h5, p, span, li, ul, div, a, button {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+}
+
+/* Setting common font-weights across tags */
+h1, h2, h3, h4, h5 {
+    font-weight: 700;
+    letter-spacing: 0;
+    color: white;
+}
+
+h1 {
+    font-size: calc(1.7em + .8vw);
+}
+
+h4 {
+    font-size: calc(1.1em + .5vw);
+}
+
+p, li, a, button {
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: white;
+}
+
+.music-tag {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+.guessing-columns {
+    font-weight: 400;
+    letter-spacing: -0.03em;
+}
+
+/* General background styling */
+body {
+    display: flex;
+    background: var(--spotify-gray);
+    min-width: 100vw;
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding: 10px;
+
+    /* any Main tag inside of a body tag */
+    main {
+        border-radius: 10px;
+        height: inherit;
+        width: 100vw;
+    }
+
+    /*  */
+    @media (min-width: 992px) {
+        padding: 0 10px;
+
+        /* any Main tag, inside of a body tag, any screen size over 991px */
+        main {
+            border-radius: 0;
+        }
+    }
+}
+
+.main-content-wrapper {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}

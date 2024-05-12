@@ -14,7 +14,17 @@ require_once('vendor/autoload.php');
 $f3 = Base::instance();
 
 //define default route
-$f3->route('GET|POST /', function($f3){
+$f3->route('GET|POST /', function() {
+    if($_SERVER['REQUEST_METHOD'] == 'GET') {
+        //User got it right.
+
+        $view = new Template();
+        echo $view->render('views/app.html');
+    }
+});
+
+//route to play a game
+$f3->route('GET|POST /game', function($f3){
     if($_SERVER['REQUEST_METHOD'] == 'GET') {
         //Present the guess screen, print all former guesses.
         $f3->set('SESSION.guessCount',0);
@@ -59,5 +69,6 @@ $f3->route('GET|POST /victory', function($f3) {
         echo $view->render('views/victory.html');
     }
 });
+
 //run fat free
 $f3->run();

@@ -1,0 +1,21 @@
+.launch-page {
+    background: var(--gradient-home-colors);
+}
+
+.launch-page > .main-content-wrapper {
+    .row:not(.row:last-child) {
+        margin-bottom: 4rem;
+    }
+
+    .row:last-child {
+        margin-bottom: 6rem;
+    }
+
+    h1 {
+        margin-left: 2rem;
+    }
+
+    h3 {
+        margin-bottom: 0.3rem;
+    }
+}
