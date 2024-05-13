@@ -4,6 +4,11 @@
 //get credentials for API
 require "secrets/credentials.php";
 
+//get db connection and query statements
+//TODO: Change include to a require once everyone has database established
+include "secrets/db.php";
+require "model/query.php";
+
 
 
 //calling this function will bind a valid token to SESSION.apiToken, good for one hour
