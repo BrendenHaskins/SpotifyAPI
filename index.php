@@ -16,8 +16,6 @@ $f3 = Base::instance();
 //define default route
 $f3->route('GET|POST /', function() {
     if($_SERVER['REQUEST_METHOD'] == 'GET') {
-        //User got it right.
-
         $view = new Template();
         echo $view->render('views/app.html');
     }
@@ -29,7 +27,7 @@ $f3->route('GET|POST /game', function($f3){
         //Present the guess screen, print all former guesses.
         $f3->set('SESSION.guessCount',0);
 
-        $f3->set('allGuesses',array('first','second'));
+        $f3->set('allGuesses',array());
 
 
         $view = new Template();
@@ -39,7 +37,9 @@ $f3->route('GET|POST /game', function($f3){
 
         $printArtist = $f3->get('SESSION.hiddenArtist');
         getHiddenArtistInfo($f3);
-        echo $view->render('views/home.html').$printArtist;
+
+
+        echo $view->render('views/home.html');
     }
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
         //A guess has been submitted.

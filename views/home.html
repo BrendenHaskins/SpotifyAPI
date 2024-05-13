@@ -51,6 +51,15 @@
     <repeat group = "{{ @allGuesses }}" value = "{{ @guess }}">
         <h2>You guessed: {{ @guess }}</h2>
     </repeat>
+
+
+    <!-- DEBUG FOR DEVELOPER USE PLEASE REMOVE -->
+    <!--TODO: REMOVE THIS WHEN THE GAME IS FINISHED-->
+    <div class="container text-center my-5" style="border: 2px solid black">
+        FOR DEVELOPMENT USE ONLY!
+        <br>
+        Hidden Artist: {{ @SESSION.hiddenArtist }}
+    </div>
 </div>
 </body>
 </html>

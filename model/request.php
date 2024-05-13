@@ -165,11 +165,13 @@ function getHiddenArtistInfo($f3): void {
     $lookupAPILink = $secondArray['href'];
 
     //TODO: Use the $lookupAPILink to fetch top songs, other info
-    var_dump($popularity);
-    echo "<hr>";
-    var_dump($genres);
-    echo "<hr>";
-    var_dump($lookupAPILink);
+
+    //Use these statements to print out info known about the artist
+    //var_dump($popularity);
+    //echo "<hr>";
+    //var_dump($genres);
+    //echo "<hr>";
+    //var_dump($lookupAPILink);
 
 
 
