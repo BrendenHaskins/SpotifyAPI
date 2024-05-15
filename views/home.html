@@ -48,8 +48,14 @@
         <button type="submit" class="btn btn-primary">GUESS</button>
     </form>
 
-    <repeat group="{{ @SESSION.allGuesses }}" value="{{ @guess }}">
-        <h2>You guessed: {{ @guess }}</h2>
+    <repeat group="{{ @SESSION.artistArrays }}" value="{{ @artistArr }}">
+        <repeat group="{{ @artistArr }}" key="{{ @key }}" value="{{ @val }}">
+            <check if="{{ @key == 'Genres' }}">
+                <true> <strong>{{ @key }}:</strong> {{ implode(',', @val) }}</true>
+                <false><strong>{{ @key }}:</strong> {{ @val }}</false>
+            </check>
+        </repeat>
+        <br>
     </repeat>
 
 
@@ -59,6 +65,15 @@
         FOR DEVELOPMENT USE ONLY!
         <br>
         Hidden Artist: {{ @SESSION.hiddenArtist }}
+        <br>
+        Popularity: {{ @SESSION.hiddenPopularity }}
+        <br>
+        Genres:
+        <repeat group="{{ @SESSION.hiddenGenres }}" value="{{ @genre }}">
+            {{ strtoupper(@genre) }}
+        </repeat>
+        <br>
+        API Link: {{ @SESSION.hiddenLink }}
         <br>
         Controller Operational!
     </div>

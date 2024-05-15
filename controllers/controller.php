@@ -23,9 +23,7 @@ class Controller {
         if($_SERVER['REQUEST_METHOD'] == 'GET') {
             //Present the guess screen, print all former guesses.
             $this->_f3->set('SESSION.guessCount',0);
-            $this->_f3->clear('SESSION.allGuesses');
-
-            //$this->_f3->set('allGuesses',array());
+            $this->_f3->clear('SESSION.artistArrays');
 
 
             $view = new Template();
@@ -44,11 +42,11 @@ class Controller {
             $userGuess = $_POST['guess'];
 
             if($oldCount == 0) {
-                $this->_f3->set('SESSION.allGuesses', array($userGuess));
+                $this->_f3->set('SESSION.artistArrays', array(searchForArtist($userGuess, $this->_f3)));
             } else {
-                $oldGuessesArr = $this->_f3->get('SESSION.allGuesses');
-                $oldGuessesArr[] = $userGuess;
-                $this->_f3->set('SESSION.allGuesses', $oldGuessesArr);
+                $oldArtistsArr = $this->_f3->get('SESSION.artistArrays');
+                $oldArtistsArr[] = searchForArtist($userGuess, $this->_f3);
+                $this->_f3->set('SESSION.artistArrays', $oldArtistsArr);
             }
 
             //$this->_f3->set('SESSION.allGuesses',$this->_f3->get('SESSION.allGuesses').$userGuess);

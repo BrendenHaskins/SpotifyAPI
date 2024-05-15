@@ -165,19 +165,59 @@ function getHiddenArtistInfo($f3): void {
     $lookupAPILink = $secondArray['href'];
 
     //TODO: Use the $lookupAPILink to fetch top songs, other info
+    $f3->set('SESSION.hiddenPopularity', $popularity);
+    $f3->set('SESSION.hiddenGenres', $genres);
+    $f3->set('SESSION.hiddenLink', $lookupAPILink);
 
-    //Use these statements to print out info known about the artist
-    //var_dump($popularity);
-    //echo "<hr>";
-    //var_dump($genres);
-    //echo "<hr>";
-    //var_dump($lookupAPILink);
 
 
 
 }
 
-function searchForArtist($artistName, $f3): bool {
-    return false;
+function searchForArtist($artistName, $f3): array {
+    $rawArtist = $artistName;
+
+    $linkSafeArtist = str_replace(' ','+',$rawArtist);
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://api.spotify.com/v1/search?q=artist%3A'.$linkSafeArtist.'&type=artist&limit=1',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_HTTPHEADER => array(
+            'Authorization: Bearer '.$f3->get('SESSION.token')
+        ),
+    ));
+
+    $response = curl_exec($curl);
+
+    if(is_string($response)) {
+
+        $firstArray = json_decode($response, true);
+        $secondArray = $firstArray['artists']['items'][0];
+        $popularity = $secondArray['popularity'];
+        $genres = $secondArray['genres'];
+        $lookupAPILink = $secondArray['href'];
+        $commonGenres = array();
+
+        //only add to genres list if they are shared between searched artist and hidden artist.
+        foreach($genres as $genre) {
+            if(in_array($genre, $f3->get('SESSION.hiddenGenres'))) {
+                $commonGenres[] = $genre;
+            }
+        }
+
+        return array('Name'=>$rawArtist,'Popularity'=>$popularity, 'Genres'=>$commonGenres);
+    } else {
+        echo "Artist not found.";
+        return array('NO_SUCH_ARTIST'=>null);
+    }
+
 }
 
