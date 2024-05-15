@@ -12,6 +12,7 @@ require_once('vendor/autoload.php');
 
 //instantiate base F3 base class
 $f3 = Base::instance();
+$controller = new
 
 //define default route
 $f3->route('GET|POST /', function() {
@@ -67,6 +68,9 @@ $f3->route('GET|POST /victory', function($f3) {
 
         $view = new Template();
         echo $view->render('views/victory.html');
+    } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        //TESTING
+
     }
 });
 
