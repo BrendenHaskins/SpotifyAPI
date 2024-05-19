@@ -5,6 +5,7 @@
 
 class Controller {
     private $_f3; // f3 router
+    const MAXGUESSES = 10;
 
     function __construct($f3) {
         $this->_f3 = $f3;
@@ -37,7 +38,9 @@ class Controller {
         } else if($_SERVER['REQUEST_METHOD'] == 'POST') {
             //A guess has been submitted.
             $oldCount = $this->_f3->get('SESSION.guessCount');
-            $this->_f3->set('SESSION.guessCount', $oldCount+1);
+            $newCount = $oldCount+1;
+            $this->_f3->set('SESSION.guessCount', $newCount);
+
 
             $userGuess = $_POST['guess'];
 
@@ -49,13 +52,14 @@ class Controller {
                 $this->_f3->set('SESSION.artistArrays', $oldArtistsArr);
             }
 
-            //$this->_f3->set('SESSION.allGuesses',$this->_f3->get('SESSION.allGuesses').$userGuess);
-
             $hiddenArtist = $this->_f3->get('SESSION.hiddenArtist');
 
             if($userGuess == $hiddenArtist) {
                 $this->_f3->reroute('victory');
             } else {
+                if($newCount == 10) {
+                    $this->_f3->reroute('defeat');
+                }
                 $view = new Template();
                 echo $view->render('views/home.html');
             }
@@ -68,6 +72,13 @@ class Controller {
 
             $view = new Template();
             echo $view->render('views/victory.html');
+        }
+    }
+
+    function defeat() : void {
+        if($_SERVER['REQUEST_METHOD'] == 'GET') {
+             $view = new Template();
+             echo $view->render('views/defeat.html');
         }
     }
 }

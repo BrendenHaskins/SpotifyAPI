@@ -28,5 +28,9 @@ $f3->route('GET|POST /victory', function($f3) {
     $GLOBALS['con']->victory();
 });
 
+$f3->route('GET|POST /defeat', function($f3) {
+    $GLOBALS['con']->defeat();
+});
+
 //run fat free
 $f3->run();
