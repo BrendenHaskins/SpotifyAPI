@@ -25,6 +25,8 @@ class Controller {
             $this->_f3->set('SESSION.guessCount',0);
             $this->_f3->clear('SESSION.artistArrays');
             $this->_f3->clear('SESSION.hints');
+            $this->_f3->clear('SESSION.hiddenTopSong');
+
 
 
 
@@ -47,6 +49,11 @@ class Controller {
             $userGuess = $_POST['guess'];
 
             if($oldCount == 0) {
+                //anything in this block should happen only once a game, initialize arrays, set globals etc...
+
+                //TEST
+                getHiddenArtistTopSong($this->_f3);
+
                 //init array
                 $this->_f3->set('SESSION.artistArrays', array(searchForArtist($userGuess, $this->_f3)));
 
@@ -67,7 +74,7 @@ class Controller {
                     $this->_f3->reroute('defeat');
                 } else if($newCount == 5) {
                     $oldHintsArr = $this->_f3->get('SESSION.hints');
-                    $oldHintsArr[] = "Guess 5 hint";
+                    $oldHintsArr[] = "Artist's top song: ".$this->_f3->get('SESSION.hiddenTopSong');
                     $this->_f3->set('SESSION.hints', $oldHintsArr);
                 } else if($newCount == 8) {
                     $oldHintsArr = $this->_f3->get('SESSION.hints');

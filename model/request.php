@@ -221,7 +221,7 @@ function searchForArtist($artistName, $f3): array {
 
 }
 
-function getHiddenArtistTopSong($f3) : string {
+function getHiddenArtistTopSong($f3) : void {
     //get the session link
     $artistAPI = $f3->get('SESSION.hiddenLink');
     //split by slash
@@ -229,10 +229,12 @@ function getHiddenArtistTopSong($f3) : string {
     //get the last string, which should be the proper API id
     $artistID = $API[sizeof($API)-1];
 
+    $f3->set('SESSION.hiddenArtistID', $artistID);
+
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://api.spotify.com/v1/artists/'.$artistID.'/top-tracks ',
+        CURLOPT_URL => 'https://api.spotify.com/v1/artists/'.$artistID.'/top-tracks',
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
@@ -248,8 +250,10 @@ function getHiddenArtistTopSong($f3) : string {
     $response = curl_exec($curl);
 
     $firstArray = json_decode($response, true);
-    $secondArray = $firstArray['tracks']['name'];
+    $secondArray = $firstArray['tracks'];
+    $output = $secondArray[0]['name'];
 
-    return $secondArray[0];
+
+    $f3->set('SESSION.hiddenTopSong', $output);
 }
 
