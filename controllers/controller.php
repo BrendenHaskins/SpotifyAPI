@@ -21,9 +21,12 @@ class Controller {
 
     function game() : void {
         if($_SERVER['REQUEST_METHOD'] == 'GET') {
-            //Present the guess screen, print all former guesses.
+            //reset all session arrays, it's a new game now.
             $this->_f3->set('SESSION.guessCount',0);
             $this->_f3->clear('SESSION.artistArrays');
+            $this->_f3->clear('SESSION.hints');
+
+
 
 
             $view = new Template();
@@ -44,7 +47,11 @@ class Controller {
             $userGuess = $_POST['guess'];
 
             if($oldCount == 0) {
+                //init array
                 $this->_f3->set('SESSION.artistArrays', array(searchForArtist($userGuess, $this->_f3)));
+
+                //init array
+                $this->_f3->set('SESSION.hints',array());
             } else {
                 $oldArtistsArr = $this->_f3->get('SESSION.artistArrays');
                 $oldArtistsArr[] = searchForArtist($userGuess, $this->_f3);
@@ -58,6 +65,14 @@ class Controller {
             } else {
                 if($newCount == 10) {
                     $this->_f3->reroute('defeat');
+                } else if($newCount == 5) {
+                    $oldHintsArr = $this->_f3->get('SESSION.hints');
+                    $oldHintsArr[] = "Guess 5 hint";
+                    $this->_f3->set('SESSION.hints', $oldHintsArr);
+                } else if($newCount == 8) {
+                    $oldHintsArr = $this->_f3->get('SESSION.hints');
+                    $oldHintsArr[] = "Guess 8 hint";
+                    $this->_f3->set('SESSION.hints', $oldHintsArr);
                 }
                 $view = new Template();
                 echo $view->render('views/home.html');

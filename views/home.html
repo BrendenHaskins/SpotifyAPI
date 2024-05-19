@@ -49,6 +49,15 @@
         <button type="submit" class="btn btn-primary">GUESS</button>
     </form>
 
+    <div>
+        <ul class="text-start">
+        <repeat group="{{ @SESSION.hints }}" value="{{ @hint }}">
+            <li> {{ @hint }}</li>
+        </repeat>
+        </ul>
+    </div>
+    <br>
+
     <repeat group="{{ @SESSION.artistArrays }}" value="{{ @artistArr }}">
         <repeat group="{{ @artistArr }}" key="{{ @key }}" value="{{ @val }}">
             <check if="{{ @key == 'Genres' }}">
