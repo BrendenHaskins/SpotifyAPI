@@ -5,7 +5,6 @@
 
 class Controller {
     private $_f3; // f3 router
-    const MAXGUESSES = 10;
 
     function __construct($f3) {
         $this->_f3 = $f3;
