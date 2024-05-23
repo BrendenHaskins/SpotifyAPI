@@ -122,6 +122,11 @@ function getAllArtistsFromSetUrl($f3): void {
     $outputArray = array_unique($artistArray);
 
     $f3->set('SESSION.artists',$outputArray);
+    ?>
+<script>
+    var artistArray = <?php echo json_encode($outputArray); ?>;
+</script>
+<?php
 }
 
 //accesses f3 SESSION.artists to randomly select an artist to hide.
