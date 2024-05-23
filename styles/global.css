@@ -22,7 +22,7 @@ h1, h2, h3, h4, h5, p, span, li, ul, div, a, button {
 }
 
 /* Setting common font-weights across tags */
-h1, h2, h3, h4, h5 {
+h1, h2, h3, h4, h5{
     font-weight: 700;
     letter-spacing: 0;
     color: white;
@@ -36,7 +36,7 @@ h4 {
     font-size: calc(1.1em + .5vw);
 }
 
-p, li, a, button {
+p, li, a, button, div {
     font-weight: 500;
     letter-spacing: -0.02em;
     color: white;
@@ -55,6 +55,7 @@ p, li, a, button {
 /* General background styling */
 body {
     display: flex;
+    flex-direction: column;
     background: var(--spotify-gray);
     min-width: 100vw;
     min-height: 100vh;
@@ -65,7 +66,8 @@ body {
     main {
         border-radius: 10px;
         height: inherit;
-        width: 100vw;
+        width: auto;
+        min-height: inherit;
     }
 
     /*  */
@@ -83,4 +85,9 @@ body {
     max-width: 900px;
     margin-left: auto;
     margin-right: auto;
+}
+
+nav {
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: 0 -10px;
 }

@@ -14,8 +14,7 @@ class Controller {
 
     function homePage() : void {
         if($_SERVER['REQUEST_METHOD'] == 'GET') {
-            $view = new Template();
-            echo $view->render('views/app.html');
+            $this->setBoilerplateContent($this->_f3, 'views/app.html', array('app-home.css'));
         }
     }
 
@@ -31,14 +30,10 @@ class Controller {
 
 
 
-            $view = new Template();
             getToken($this->_f3);
             getAllArtistsFromSetUrl($this->_f3);
             selectHiddenArtist($this->_f3);
             getHiddenArtistInfo($this->_f3);
-
-
-            echo $view->render('views/home.html');
         } else if($_SERVER['REQUEST_METHOD'] == 'POST') {
             //A guess has been submitted.
             $oldCount = $this->_f3->get('SESSION.guessCount');
@@ -81,25 +76,31 @@ class Controller {
                     $oldHintsArr[] = "Guess 8 hint";
                     $this->_f3->set('SESSION.hints', $oldHintsArr);
                 }
-                $view = new Template();
-                echo $view->render('views/home.html');
             }
         }
+        $this->setBoilerplateContent($this->_f3, 'views/home.html', array());
     }
 
     function victory() : void {
         if($_SERVER['REQUEST_METHOD'] == 'GET') {
             //User got it right.
-
-            $view = new Template();
-            echo $view->render('views/victory.html');
+            $this->setBoilerplateContent($this->_f3, 'views/victory.html', array());
         }
     }
 
     function defeat() : void {
         if($_SERVER['REQUEST_METHOD'] == 'GET') {
-             $view = new Template();
-             echo $view->render('views/defeat.html');
+            $this->setBoilerplateContent($this->_f3, 'views/defeat.html', array());
         }
+    }
+
+    // setting routes to the boilerplate view
+    function setBoilerplateContent($f3, string $content, array $styles, array $scripts = array()) : void {
+        $f3->set('styles', $styles);
+        $f3->set('scripts', $scripts);
+        $f3->set('content', $content);
+
+        echo Template::instance()->render('views/boilerplateBase.html');
+
     }
 }
