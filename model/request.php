@@ -182,7 +182,7 @@ function getHiddenArtistInfo($f3): void {
 function searchForArtist($artistName, $f3): array {
     $rawArtist = $artistName;
 
-    $linkSafeArtist = str_replace(' ','+',$rawArtist);
+    $linkSafeArtist = htmlspecialchars($rawArtist);
 
     $curl = curl_init();
 
