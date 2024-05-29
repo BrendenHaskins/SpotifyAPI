@@ -2,19 +2,25 @@
 window.addEventListener("DOMContentLoaded", (event) => {
     const element = document.getElementById("guess");
     const resultsQuerySelector = document.getElementById('result');
-    //if guess query gets selected, un-hide the suggestions
-    element.addEventListener('focus', function() {
-        resultsQuerySelector.style.display = "block";
-    });
-    //if guess query gets un-selected after 500 milliseconds, hide the suggestions
-    element.addEventListener('focusout', function() {
-        setTimeout(() => {
+
+    // if window is clicked, hide the results
+    document.body.addEventListener('click', function(){
             resultsQuerySelector.style.display = "none";
-        }, 500);
+    }, false);
 
-    });
+    //else open it
+    element.addEventListener('click',function() {
+        setTimeout(() => {
+            resultsQuerySelector.style.display = "block";
+    }, 1);
+    }, true);
+
+    resultsQuerySelector.addEventListener('click',function() {
+        setTimeout(() => {
+            resultsQuerySelector.style.display = "block";
+    }, 1);
+    }, true);
 });
-
 function autocompleteMatch(userInput) {
     if (userInput === '') {
         return [];
@@ -41,11 +47,17 @@ function showResults(val) {
         size = artists.length;
     }
     //add elements to a NEW <li>
-    for (i = 0; i < size; i++) {
-        list += '<li> <button type="submit">' + capitalizeFirstLetter(artists[i]) + '</button> </li>';
+    for (let i = 0; i < size; i++) {
+        list += '<li> <button onclick="enterValue(\'' + capitalizeFirstLetter(artists[i])
+            + '\')">' + capitalizeFirstLetter(artists[i]) + '</button> </li>';
     }
     //add the list to a <ul> in results
     res.innerHTML = '<ul>' + list + '</ul>';
+}
+
+function enterValue(value) {
+    document.getElementById("guess").value = value;
+    document.getElementById("guessingForm").submit();
 }
 
 //probably a useless function, but is there for "bob marley" or something un-capitalized (was useful in testing)

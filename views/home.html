@@ -4,9 +4,10 @@
     <h2 class="my-2">Guesses: {{ @SESSION.guessCount }}/10</h2>
 
 
-    <form autocomplete="off" action="#" method="post">
+    <form id="guessingForm" autocomplete="off" action="#" method="post">
         <label for="guess">Your Guess:</label>
-        <input type="text" id="guess" name="guess" placeholder="Taylor Swift" onKeyUp="showResults(this.value)">
+        <input type="text" id="guess" name="guess" placeholder="Taylor Swift"
+               onKeyUp="showResults(this.value)">
         <button type="submit" class="btn btn-primary">GUESS</button>
         <div id="result"></div>
     </form>

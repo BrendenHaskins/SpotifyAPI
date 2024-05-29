@@ -35,6 +35,8 @@ class Controller {
             selectHiddenArtist($this->_f3);
             getHiddenArtistInfo($this->_f3);
         } else if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            getToken($this->_f3);
+            getAllArtistsFromSetUrl($this->_f3);
             //A guess has been submitted.
             $oldCount = $this->_f3->get('SESSION.guessCount');
             $newCount = $oldCount+1;
