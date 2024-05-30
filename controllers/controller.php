@@ -25,6 +25,7 @@ class Controller {
             $this->_f3->clear('SESSION.artistArrays');
             $this->_f3->clear('SESSION.hints');
             $this->_f3->clear('SESSION.hiddenTopSong');
+            $this->_f3->clear('SESSION.hiddenPhotoURL');
 
 
 
