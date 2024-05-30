@@ -23,7 +23,7 @@ h1, h2, h3, h4, h5, p, span, li, ul, div, a, button {
 }
 
 /* Setting common font-weights across tags */
-h1, h2, h3, h4, h5{
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5 {
     font-weight: 700;
     letter-spacing: 0;
     color: white;

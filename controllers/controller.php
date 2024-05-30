@@ -23,7 +23,8 @@ class Controller {
             //reset all session arrays, it's a new game now.
             $this->_f3->set('SESSION.guessCount',0);
             $this->_f3->clear('SESSION.artistArrays');
-            $this->_f3->clear('SESSION.hints');
+            $this->_f3->clear('SESSION.songHint');
+            $this->_f3->clear('SESSION.photoHint');
             $this->_f3->clear('SESSION.hiddenTopSong');
             $this->_f3->clear('SESSION.hiddenPhotoURL');
 
@@ -72,20 +73,16 @@ class Controller {
                 if($newCount == 10) {
                     $this->_f3->reroute('defeat');
                 } else if($newCount == 5) {
-                    $oldHintsArr = $this->_f3->get('SESSION.hints');
-                    $oldHintsArr[] = "Artist's top song: ".$this->_f3->get('SESSION.hiddenTopSong');
-                    $this->_f3->set('SESSION.hints', $oldHintsArr);
+                    $this->_f3->set('SESSION.songHint', $this->_f3->get('SESSION.hiddenTopSong'));
                 } else if($newCount == 8) {
-                    $oldHintsArr = $this->_f3->get('SESSION.hints');
-                    $oldHintsArr[] = $this->_f3->get('SESSION.hiddenPhotoURL');
-                    $this->_f3->set('SESSION.hints', $oldHintsArr);
+                    $this->_f3->set('SESSION.photoHint', $this->_f3->get('SESSION.hiddenPhotoURL'));
                 }
             }
         }
         $this->setBoilerplateContent(
             $this->_f3,
             'views/home.html',
-            array('autocomplete.css'),
+            array('autocomplete.css', 'guessStyles.css'),
             array('searchautocomplete.js'));
     }
 

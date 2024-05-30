@@ -1,0 +1,21 @@
+#hintScreen {
+    background-color: var(--spotify-green);
+    min-height: 10rem;
+
+    #iconHint {
+        background-color: var(--spotify-gray);
+    }
+
+    #textHints {
+        span {
+            /*color: var(--spotify-gray);*/
+        }
+    }
+
+    img, .hintPlaceholder {
+        height: 120px;
+        width: 120px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+}
