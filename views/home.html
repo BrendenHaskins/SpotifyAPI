@@ -1,5 +1,5 @@
 <include href="views/navbar.html"></include>
-<div class="d-flex flex-column text-center main-content-wrapper">
+<div class="d-flex flex-column text-center main-content-wrapper col-11 col-md-8 col-lg-6">
     <a class="navbar-brand" href="./">
         <img class="d-inline-block align-text-top" src="images/SpottedLogo.svg" alt="Spotted Logo">
     </a>
@@ -13,14 +13,14 @@
     </form>
 
     <div id="hintScreen" class="col-10 mx-auto rounded shadow p-3 d-flex justify-content-between">
-        <div id="iconHint" class="col-4 d-flex flex-column justify-content-center align-items-center p-2 rounded me-3">
+        <div id="iconHint" class="col-5 d-flex flex-column justify-content-center align-items-center p-2 rounded me-3">
             <check if="{{ isset(@SESSION.photoHint) }}">
-                <true><img class="rounded-circle shadow" src="{{ @SESSION.photoHint }}" alt="Spotify Artist Icon"></true>
-                <false><div class="rounded-circle hintPlaceholder bg-dark shadow"></div></false>
+                <true><img class="rounded-circle shadow mx-2 my-1" src="{{ @SESSION.photoHint }}" alt="Spotify Artist Icon"></true>
+                <false><div class="rounded-circle hintPlaceholder bg-dark shadow mx-2 my-1"></div></false>
             </check>
             <h4 class="mt-2">Icon Hint</h4>
         </div>
-        <div id="textHints" class="d-flex flex-column mx-auto justify-content-between">
+        <div id="textHints" class="d-flex flex-column mx-auto justify-content-between my-2">
             <h4 class="text-dark">Top Genre: <span class="text-white">{{ ucfirst(@SESSION.hiddenGenres[0]) }}</span></h4>
             <div class="d-flex flex-column">
                 <h4 class="text-decoration-underline text-dark">Top Song</h4>

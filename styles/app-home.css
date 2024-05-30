@@ -1,5 +1,5 @@
 .launch-page {
-    background: var(--gradient-home-colors);
+    background-image: url(../images/spottedBackground.svg), var(--gradient-home-colors);
 }
 
 .launch-page > .main-content-wrapper {
