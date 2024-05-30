@@ -35,8 +35,6 @@ class Controller {
             selectHiddenArtist($this->_f3);
             getHiddenArtistInfo($this->_f3);
         } else if($_SERVER['REQUEST_METHOD'] == 'POST') {
-            getToken($this->_f3);
-            getAllArtistsFromSetUrl($this->_f3);
             //A guess has been submitted.
             $oldCount = $this->_f3->get('SESSION.guessCount');
             $newCount = $oldCount+1;
@@ -50,6 +48,7 @@ class Controller {
 
                 //TEST
                 getHiddenArtistTopSong($this->_f3);
+                getHiddenArtistPhoto($this->_f3);
 
                 //init array
                 $this->_f3->set('SESSION.artistArrays', array(searchForArtist($userGuess, $this->_f3)));
@@ -75,7 +74,7 @@ class Controller {
                     $this->_f3->set('SESSION.hints', $oldHintsArr);
                 } else if($newCount == 8) {
                     $oldHintsArr = $this->_f3->get('SESSION.hints');
-                    $oldHintsArr[] = "Guess 8 hint";
+                    $oldHintsArr[] = $this->_f3->get('SESSION.hiddenPhotoURL');
                     $this->_f3->set('SESSION.hints', $oldHintsArr);
                 }
             }

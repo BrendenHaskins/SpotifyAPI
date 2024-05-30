@@ -143,7 +143,7 @@ function selectHiddenArtist($f3): void
 function getHiddenArtistInfo($f3): void {
     $rawArtist = $f3->get('SESSION.hiddenArtist');
 
-    $linkSafeArtist = urlencode($rawArtist);
+    $linkSafeArtist = str_replace(' ','+',$rawArtist);
 
     $curl = curl_init();
 
@@ -182,7 +182,7 @@ function getHiddenArtistInfo($f3): void {
 function searchForArtist($artistName, $f3): array {
     $rawArtist = $artistName;
 
-    $linkSafeArtist = urlencode($rawArtist);
+    $linkSafeArtist = htmlspecialchars($rawArtist);
 
     $curl = curl_init();
 
@@ -260,5 +260,34 @@ function getHiddenArtistTopSong($f3) : void {
 
 
     $f3->set('SESSION.hiddenTopSong', $output);
+}
+
+function getHiddenArtistPhoto($f3) : void {
+    $artistID = $f3->get('SESSION.hiddenArtistID');
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://api.spotify.com/v1/artists/'.$artistID,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_HTTPHEADER => array(
+            'Authorization: Bearer '.$f3->get('SESSION.token')
+        ),
+    ));
+
+    $response = curl_exec($curl);
+
+    $firstArray = json_decode($response, true);
+    $secondArray = $firstArray['images'];
+    $output = $secondArray[0]['url'];
+
+
+    $f3->set('SESSION.hiddenPhotoURL', $output);
 }
 
