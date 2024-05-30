@@ -1,14 +1,13 @@
 <include href="views/navbar.html"></include>
-<div class="container text-center">
-    <h1 class="my-2">I'm thinking of an artist. A pretty popular one.</h1>
+<div class="container text-center main-content-wrapper">
+    <a class="navbar-brand" href="./">
+        <img class="d-inline-block align-text-top" src="images/SpottedLogo.svg" alt="Spotted Logo">
+    </a>
     <h2 class="my-2">Guesses: {{ @SESSION.guessCount }}/10</h2>
 
 
-    <form id="guessingForm" autocomplete="off" action="#" method="post">
-        <label for="guess">Your Guess:</label>
-        <input type="text" id="guess" name="guess" placeholder="Taylor Swift"
-               onKeyUp="showResults(this.value)">
-        <button type="submit" class="btn btn-primary">GUESS</button>
+    <form autocomplete="off" action="#" method="post">
+        <input type="text" id="guess" name="guess" placeholder="Guess an artist..." onKeyUp="showResults(this.value)">
         <div id="result"></div>
     </form>
 
