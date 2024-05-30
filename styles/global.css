@@ -6,6 +6,7 @@
     --gradient-halfright-answer: linear-gradient(#ffcc15bf 0%, #1e1e1eff 100%);
     --gradient-right-answer: linear-gradient(#1db954bf 0%, #1e1e1eff 100%);
     --gradient-wrong-answer: linear-gradient(#fc0101bf 0%, #1e1e1eff 100%);
+    --gradient-temp-answer: linear-gradient(rgb(96, 96, 96) 0%, #1e1e1eff 100%);
 
     /* solid colors */
     --spotify-green: #1DB954;

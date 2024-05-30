@@ -82,7 +82,11 @@ class Controller {
                 }
             }
         }
-        $this->setBoilerplateContent($this->_f3, 'views/home.html', array('autocomplete.css'), array('javascript/searchautocomplete.js'));
+        $this->setBoilerplateContent(
+            $this->_f3,
+            'views/home.html',
+            array('autocomplete.css'),
+            array('searchautocomplete.js'));
     }
 
     function victory() : void {

@@ -48,7 +48,15 @@ function showResults(val) {
     }
     //add elements to a NEW <li>
     for (let i = 0; i < size; i++) {
-        list += '<li> <button onclick="enterValue(\'' + capitalizeFirstLetter(artists[i])
+        // some niche logic for styling purposes
+        let color = i % 2 === 0 ? 'rgb(52, 52, 52)' : 'rgb(42, 42, 42)'
+        let rounding = () => {
+            if (i === 0) {return 'rounded-top'}
+            else if (i === size - 1) {return 'rounded-bottom'}
+            else return "";
+        }
+
+        list += '<li class=" ' + rounding() + '" style="background-color: ' + color + '"> <button onclick="enterValue(\'' + capitalizeFirstLetter(artists[i])
             + '\')">' + capitalizeFirstLetter(artists[i]) + '</button> </li>';
     }
     //add the list to a <ul> in results

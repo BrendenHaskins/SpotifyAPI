@@ -1,5 +1,5 @@
 <include href="views/navbar.html"></include>
-<div class="container text-center main-content-wrapper">
+<div class="d-flex flex-column text-center main-content-wrapper">
     <a class="navbar-brand" href="./">
         <img class="d-inline-block align-text-top" src="images/SpottedLogo.svg" alt="Spotted Logo">
     </a>
@@ -7,8 +7,9 @@
 
 
     <form autocomplete="off" action="#" method="post">
-        <input type="text" id="guess" name="guess" placeholder="Guess an artist..." onKeyUp="showResults(this.value)">
-        <div id="result"></div>
+        <input type="text" id="guess" name="guess" class="mt-3 mb-2 col-6"
+               placeholder="Guess an artist..." onKeyUp="showResults(this.value)">
+        <div id="result" class="z-3 position-absolute shadow rounded-3 col-4 col-lg-2"></div>
     </form>
 
     <div>
@@ -20,15 +21,38 @@
     </div>
     <br>
 
-    <repeat group="{{ @SESSION.artistArrays }}" value="{{ @artistArr }}">
-        <repeat group="{{ @artistArr }}" key="{{ @key }}" value="{{ @val }}">
-            <check if="{{ @key == 'Genres' }}">
-                <true> <strong>{{ @key }}:</strong> {{ implode(',', @val) }}</true>
-                <false><strong>{{ @key }}:</strong> {{ @val }}</false>
-            </check>
+    <div id="guessCardList">
+        <div id="guessColumns" class="d-flex justify-content-evenly">
+            <div>
+                <span>Name</span>
+            </div>
+            <div>
+                <span>Popularity</span>
+            </div>
+            <div>
+                <span>Shared Genres</span>
+            </div>
+        </div>
+        <repeat group="{{ @SESSION.artistArrays }}" value="{{ @artistArr }}">
+            <div id="guessCard" class="d-flex align-items-center justify-content-evenly mb-5">
+                <repeat group="{{ @artistArr }}" key="{{ @key }}" value="{{ @val }}">
+                    <div class="shadow text-center align-content-center rounded">
+                        <span class="my-auto d-inline-block">
+                            <check if="{{ @key == 'Genres' }}">
+                            <true>
+                                <check if="{{ empty(@val) }}">
+                                    <true>none</true>
+                                    <false>{{ implode(', ', @val) }}</false>
+                                </check>
+                            </true>
+                            <false>{{ @val }}</false>
+                        </check>
+                        </span>
+                    </div>
+                </repeat>
+            </div>
         </repeat>
-        <br>
-    </repeat>
+    </div>
 
 
     <!-- DEBUG FOR DEVELOPER USE PLEASE REMOVE -->
