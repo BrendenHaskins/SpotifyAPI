@@ -22,6 +22,7 @@ class Controller {
         if($_SERVER['REQUEST_METHOD'] == 'GET') {
             //reset all session arrays, it's a new game now.
             $this->_f3->set('SESSION.guessCount',0);
+            $this->_f3->set('SESSION.priorGuesses',array());
             $this->_f3->clear('SESSION.artistArrays');
             $this->_f3->clear('SESSION.songHint');
             $this->_f3->clear('SESSION.photoHint');
@@ -47,6 +48,8 @@ class Controller {
 
             $userGuess = $_POST['guess'];
 
+
+
             if($oldCount == 0) {
                 //anything in this block should happen only once a game, initialize arrays, set globals etc...
 
@@ -59,10 +62,26 @@ class Controller {
 
                 //init array
                 $this->_f3->set('SESSION.hints',array());
+
+                //add first guess
+                $guessArray = $this->_f3->get('SESSION.priorGuesses');
+                $guessArray[] = $userGuess;
+                $this->_f3->set('SESSION.priorGuesses',$guessArray);
             } else {
                 $oldArtistsArr = $this->_f3->get('SESSION.artistArrays');
-                $oldArtistsArr[] = searchForArtist($userGuess, $this->_f3);
-                $this->_f3->set('SESSION.artistArrays', $oldArtistsArr);
+
+                //CHECK DUPLICATE GUESSES
+                if(in_array($userGuess,$this->_f3->get('SESSION.priorGuesses'))){
+                    echo '<div class="alert alert-warning" role="alert">You already guessed '.$userGuess.'.</div>';
+                    $newCount = $oldCount;
+                    $this->_f3->set('SESSION.guessCount', $newCount);
+                } else {
+                    $guessArray = $this->_f3->get('SESSION.priorGuesses');
+                    $guessArray[] = $userGuess;
+                    $this->_f3->set('SESSION.priorGuesses',$guessArray);
+                    $oldArtistsArr[] = searchForArtist($userGuess, $this->_f3);
+                    $this->_f3->set('SESSION.artistArrays', $oldArtistsArr);
+                }
             }
 
             $hiddenArtist = $this->_f3->get('SESSION.hiddenArtist');
