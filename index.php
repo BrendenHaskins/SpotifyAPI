@@ -13,6 +13,7 @@ require_once('vendor/autoload.php');
 //instantiate base F3 base class
 $f3 = Base::instance();
 $con = new Controller($f3);
+$query = new Query();
 
 //define default route
 $f3->route('GET|POST /', function() {

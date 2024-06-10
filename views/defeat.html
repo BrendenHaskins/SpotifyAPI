@@ -1,4 +1,22 @@
 <include href="views/navbar.html"></include>
 <div class="container text-center">
-<h1>You are out of guesses. Maybe next time? The hidden artist was {{ @SESSION.hiddenArtist }}.</h1>
+    <h1>You are out of guesses. Maybe next time? The hidden artist was {{ @SESSION.hiddenArtist }}.</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>User ID</th>
+            <th>User Name</th>
+            <th>User Score</th>
+        </tr>
+        </thead>
+        <tbody>
+        <repeat group="{{ @leaderboard }}" value="{{ @user }}">
+            <tr>
+                <td>{{ @user.user_id }}</td>
+                <td>{{ @user.name }}</td>
+                <td>{{ @user.score }}</td>
+            </tr>
+        </repeat>
+        </tbody>
+    </table>
 </div>

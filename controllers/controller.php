@@ -87,6 +87,7 @@ class Controller {
             $hiddenArtist = $this->_f3->get('SESSION.hiddenArtist');
 
             if($userGuess == $hiddenArtist) {
+                //TODO: Add increment scoring
                 $this->_f3->reroute('victory');
             } else {
                 if($newCount == 10) {
@@ -108,12 +109,14 @@ class Controller {
     function victory() : void {
         if($_SERVER['REQUEST_METHOD'] == 'GET') {
             //User got it right.
+            $this->_f3->set('leaderboard', $GLOBALS['query']->getLeaderboard());
             $this->setBoilerplateContent($this->_f3, 'views/victory.html', array());
         }
     }
 
     function defeat() : void {
         if($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $this->_f3->set('leaderboard', $GLOBALS['query']->getLeaderboard());
             $this->setBoilerplateContent($this->_f3, 'views/defeat.html', array());
         }
     }
