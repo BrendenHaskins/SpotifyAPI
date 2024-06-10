@@ -11,7 +11,7 @@ class Query {
     function __construct()
     {
         // Require my PDO database connection credentials
-        require_once $_SERVER['DOCUMENT_ROOT'].'/../spotConfig.php';
+        require_once $_SERVER['DOCUMENT_ROOT'].'/../config.php';
 
         try {
             //Instantiate our PDO Database Object
