@@ -1,5 +1,9 @@
 <include href="views/navbar.html"></include>
 <div class="container text-center my-5">
+    <check if="{{ @SESSION.guessCount == 1 }}">
+        <true><h1>You guessed correctly on your first try!</h1></true>
+        <false><h1>You guessed correctly! It took {{ @SESSION.guessCount }} guesses.</h1></false>
+    </check>
     <h1>You guessed correctly! It took {{ @SESSION.guessCount }} guesses.</h1>
     <table class="table table-striped table-dark my-5">
         <thead class="thead">
