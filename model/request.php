@@ -3,6 +3,9 @@
 
 //get credentials for API
 require "secrets/credentials.php";
+require "classes/BaseHandler.php";
+require "classes/LinkHandler.php";
+
 
 //calling this function will bind a valid token to SESSION.apiToken, good for one hour
 function getToken($f3): void {
@@ -81,24 +84,10 @@ function getAllArtistsFromSetUrl($f3): void {
     //Rolling Stone: Top 100 Artists
     $url = '6GBQBVorVOZQo7qaMBAiyu';
 
-    $curl = curl_init();
-    curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://api.spotify.com/v1/playlists/'.$url.
-            '?market=ES&fields=tracks.items%28track%28artists%28name%29%29',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'GET',
-        CURLOPT_HTTPHEADER => array(
-            'Authorization: Bearer '.$f3->get('SESSION.token')
-        ),
-    ));
+   $handler = new LinkHandler('https://api.spotify.com/v1/playlists/'.$url.
+       '?market=ES&fields=tracks.items%28track%28artists%28name%29%29', $f3->get('SESSION.token'));
 
-    $response = curl_exec($curl);
-    $temp = json_decode($response, true);
+    $temp = $handler->execute();
     $trimmedTemp = $temp['tracks']['items'];
 
     $jsonArray = array();
@@ -138,38 +127,17 @@ function getHiddenArtistInfo($f3): void {
 
     $linkSafeArtist = urlencode($rawArtist);
 
-    $curl = curl_init();
+    $handler = new LinkHandler('https://api.spotify.com/v1/search?q=artist%3A'.$linkSafeArtist.'&type=artist&limit=1', $f3->get('SESSION.token'));
 
-    curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://api.spotify.com/v1/search?q=artist%3A'.$linkSafeArtist.'&type=artist&limit=1',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'GET',
-        CURLOPT_HTTPHEADER => array(
-            'Authorization: Bearer '.$f3->get('SESSION.token')
-        ),
-    ));
-
-    $response = curl_exec($curl);
-
-    $firstArray = json_decode($response, true);
+    $firstArray = $handler->execute();
     $secondArray = $firstArray['artists']['items'][0];
     $popularity = $secondArray['popularity'];
     $genres = $secondArray['genres'];
     $lookupAPILink = $secondArray['href'];
 
-    //TODO: Use the $lookupAPILink to fetch top songs, other info
     $f3->set('SESSION.hiddenPopularity', $popularity);
     $f3->set('SESSION.hiddenGenres', $genres);
     $f3->set('SESSION.hiddenLink', $lookupAPILink);
-
-
-
-
 }
 
 function searchForArtist($artistName, $f3): array {
@@ -177,45 +145,23 @@ function searchForArtist($artistName, $f3): array {
 
     $linkSafeArtist = urlencode($rawArtist);
 
-    $curl = curl_init();
+    $handler = new LinkHandler('https://api.spotify.com/v1/search?q=artist%3A'.$linkSafeArtist.'&type=artist&limit=1',$f3->get('SESSION.token'));
 
-    curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://api.spotify.com/v1/search?q=artist%3A'.$linkSafeArtist.'&type=artist&limit=1',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'GET',
-        CURLOPT_HTTPHEADER => array(
-            'Authorization: Bearer '.$f3->get('SESSION.token')
-        ),
-    ));
+    $firstArray = $handler->execute();
+    $secondArray = $firstArray['artists']['items'][0];
+    $popularity = $secondArray['popularity'];
+    $genres = $secondArray['genres'];
+    $commonGenres = array();
 
-    $response = curl_exec($curl);
-
-    if(is_string($response)) {
-
-        $firstArray = json_decode($response, true);
-        $secondArray = $firstArray['artists']['items'][0];
-        $popularity = $secondArray['popularity'];
-        $genres = $secondArray['genres'];
-        $lookupAPILink = $secondArray['href'];
-        $commonGenres = array();
-
-        //only add to genres list if they are shared between searched artist and hidden artist.
-        foreach($genres as $genre) {
-            if(in_array($genre, $f3->get('SESSION.hiddenGenres'))) {
-                $commonGenres[] = $genre;
-            }
+    //only add to genres list if they are shared between searched artist and hidden artist.
+    foreach($genres as $genre) {
+        if(in_array($genre, $f3->get('SESSION.hiddenGenres'))) {
+            $commonGenres[] = $genre;
         }
-
-        return array('Name'=>$rawArtist,'Popularity'=>$popularity, 'Genres'=>$commonGenres);
-    } else {
-        echo "Artist not found.";
-        return array('NO_SUCH_ARTIST'=>null);
     }
+
+    return array('Name'=>$rawArtist,'Popularity'=>$popularity, 'Genres'=>$commonGenres);
+
 
 }
 
@@ -229,26 +175,11 @@ function getHiddenArtistTopSong($f3) : void {
 
     $f3->set('SESSION.hiddenArtistID', $artistID);
 
-    $curl = curl_init();
+    $handler = new LinkHandler('https://api.spotify.com/v1/artists/'.$artistID.'/top-tracks', $f3->get('SESSION.token'));
 
-    curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://api.spotify.com/v1/artists/'.$artistID.'/top-tracks',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'GET',
-        CURLOPT_HTTPHEADER => array(
-            'Authorization: Bearer '.$f3->get('SESSION.token')
-        ),
-    ));
+    $response = $handler->execute();
 
-    $response = curl_exec($curl);
-
-    $firstArray = json_decode($response, true);
-    $secondArray = $firstArray['tracks'];
+    $secondArray = $response['tracks'];
     $output = $secondArray[0]['name'];
 
 
@@ -258,25 +189,9 @@ function getHiddenArtistTopSong($f3) : void {
 function getHiddenArtistPhoto($f3) : void {
     $artistID = $f3->get('SESSION.hiddenArtistID');
 
-    $curl = curl_init();
+    $handler = new LinkHandler('https://api.spotify.com/v1/artists/'.$artistID, $f3->get('SESSION.token'));
 
-    curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://api.spotify.com/v1/artists/'.$artistID,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'GET',
-        CURLOPT_HTTPHEADER => array(
-            'Authorization: Bearer '.$f3->get('SESSION.token')
-        ),
-    ));
-
-    $response = curl_exec($curl);
-
-    $firstArray = json_decode($response, true);
+    $firstArray = $handler->execute();
     $secondArray = $firstArray['images'];
     $output = $secondArray[0]['url'];
 

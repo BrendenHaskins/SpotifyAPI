@@ -24,7 +24,8 @@ private array $_header;
      * @param string $_request request type (get, post...)
      * @param array $_header content of header
      */
-    public function __construct(bool $_returnTransfer, string $_encoding, int $_maxRedirects, int $_timeout, bool $_followLocation, string $_version, string $_request, array $_header)
+    public function __construct(bool $_returnTransfer, string $_encoding, int $_maxRedirects, int $_timeout,
+                                bool $_followLocation, string $_version, string $_request, array $_header)
     {
         $this->_returnTransfer = $_returnTransfer;
         $this->_encoding = $_encoding;

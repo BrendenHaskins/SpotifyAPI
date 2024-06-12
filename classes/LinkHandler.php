@@ -1,5 +1,4 @@
 <?php
-
 /**
  * LinkHandler enables requests to Spotify's v1 API, passing correct settings to cUrl
  */
