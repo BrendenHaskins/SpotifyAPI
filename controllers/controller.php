@@ -166,7 +166,7 @@ class Controller {
             if(empty($this->_f3->get('errors'))) {
                 //checks database if already existing user exists
                 $result = $GLOBALS['query']->checkUserName($user);
-                if($user->getName() == $result) {
+                if($user->getName() == $result['name']) {
                     $this->_f3->set('errors["userExists"]', false);
                 } else {
                     $GLOBALS['query']->insertUser($user);
