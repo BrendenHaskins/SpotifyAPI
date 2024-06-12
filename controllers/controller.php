@@ -126,28 +126,58 @@ class Controller {
      *
      * @return void
      */
-    function login() {
-        if($_SERVER['REQUEST_METHOD'] == 'GET') {
-            $this->setBoilerplateContent($this->_f3, 'views/login.html', array());
-        } else {
-            //TODO:Add validation to login before sending them to game
-            $this->_f3->reroute('game');
+    function login()
+    {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $user = Validate::validateUser($this->_f3);
+
+            if(empty($this->_f3->get('errors'))) {
+                //checks database if already existing user exists
+                $result = $GLOBALS['query']->checkUserPass($user);
+
+                //checks if password hash matches
+                $verifyPassword = password_verify($_POST['password'], $result['password']);
+                if($verifyPassword) {
+                    //TODO: Set session to logged in
+                    $this->_f3->reroute('game');
+                } else {
+                    $this->_f3->set('errors["incorrectLogin"]', false);
+                }
+            }
         }
+
+        $this->_f3->set('details', 'Log in');
+        //render page
+        $this->setBoilerplateContent($this->_f3, 'views/login.html', array());
     }
+
 
     /**
      * Brings the user to the signup page where they need to create an account
      *
      * @return void
      */
-    function signup() {
-        //TODO: Rework login view page so it can be dynamic for signup
-        if($_SERVER['REQUEST_METHOD'] == 'GET') {
-            $this->setBoilerplateContent($this->_f3, 'views/login.html', array());
-        } else {
-            //TODO:Add validation to signup before sending them to game
-            $this->_f3->reroute('game');
+    function signup()
+    {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $user = Validate::validateUser($this->_f3);
+            Validate::checkDoublePassword($this->_f3);
+
+            if(empty($this->_f3->get('errors'))) {
+                //checks database if already existing user exists
+                $result = $GLOBALS['query']->checkUserName($user);
+                if($user->getName() == $result) {
+                    $this->_f3->set('errors["userExists"]', false);
+                } else {
+                    $GLOBALS['query']->insertUser($user);
+                    //TODO: Set session to logged in
+                    $this->_f3->reroute('game');
+                }
+            }
         }
+        $this->_f3->set('details', 'Sign up');
+        //render page
+        $this->setBoilerplateContent($this->_f3, 'views/login.html', array());
     }
 
     /**
@@ -155,13 +185,15 @@ class Controller {
      *
      * @return void
      */
-    function logout() {
+    function logout()
+    {
         session_destroy();
         $this->_f3->reroute('/');
     }
 
     // setting routes to the boilerplate view
-    function setBoilerplateContent($f3, string $content, array $styles, array $scripts = array()) : void {
+    function setBoilerplateContent($f3, string $content, array $styles, array $scripts = array()) : void
+    {
         $f3->set('styles', $styles);
         $f3->set('scripts', $scripts);
         $f3->set('content', $content);

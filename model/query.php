@@ -43,6 +43,41 @@ class Query {
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    function checkUserName($user) {
+        //Define and Prepare Query
+        $statement = $this->_dbh->prepare(
+          'SELECT name FROM SpotifyUser
+                  WHERE `name` = :name
+                  LIMIT 1');
+
+        //bind parameters
+        $name = $user->getName();
+        $statement->bindParam(':name', $name);
+
+        //execute select
+        $statement->execute();
+
+        //return name
+        return $statement->fetch(PDO::FETCH_ASSOC);
+    }
+    function checkUserPass($user) {
+        //Define and Prepare Query
+        $statement = $this->_dbh->prepare(
+          'SELECT password FROM SpotifyUser
+                  WHERE `name` = :name
+                  LIMIT 1');
+
+        //bind parameters
+        $name = $user->getName();
+        $statement->bindParam(':name', $name);
+
+        //execute select
+        $statement->execute();
+
+        //return name
+        return $statement->fetch(PDO::FETCH_ASSOC);
+    }
+
     function insertUser($user)
     {
         //Define and Prepare Query

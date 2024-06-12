@@ -3,18 +3,69 @@
     <a class="navbar-brand" href="./">
         <img class="d-inline-block align-text-top" src="images/SpottedLogo.svg" alt="Spotted Logo">
     </a>
-    <h2 class="my-2">Please Log In</h2>
+    <h2 class="my-2">Please
+        <check if="{{ isset(@details) }}">
+            {{ @details }}
+        </check></h2>
+    <check if="{{ isset(@details) && @details == 'Sign up' }}">
+        <p>Username must be between 3-100 characters.
+        <br>Passwords must have 1 number and 1 a-Z character. 8-16 characters</p>
+    </check>
     <form action="#" method="post">
+        <check if="{{ isset(@errors['incorrectLogin']) }}">
+            <span style="color: red">Incorrect username or password.
+                <br>Please log in again.</span>
+            <br>
+        </check>
+        <check if="{{ isset(@errors['userExists']) }}">
+            <span style="color: red">Username already exists.
+                <br>Please pick a different username.</span>
+            <br>
+        </check>
         <label for="username" class="mb-4">Username: </label>
         <input type="text" id="username" name="username" class="mt-3 mb-2 col-6"
                required>
         <br>
+        <check if="{{ isset(@errors['username']) }}">
+            <span style="color: red">Invalid username.
+                <br> Make sure above 3 characters and under 100</span>
+            <br>
+        </check>
         <label for="password" class="mb-4">Password: </label>
         <input type="password" id="password" name="password" class="mt-3 mb-2 col-6"
                required>
+        <br>
+        <check if="{{ isset(@details) && @details == 'Sign up' }}">
+            <label for="password2" class="mb-4">Password again: </label>
+            <input type="password" id="password2" name="password2" class="mt-3 mb-2 col-6"
+                   required>
+            <br>
+        </check>
+        <check if="{{ isset(@errors['password']) }}">
+            <span style="color: red">Invalid password. <br>
+                Includes at least 1 number and 1 a-Z character. <br>
+                Make sure above 8 characters and under 16.</span>
+            <br><br>
+        </check>
+        <check if="{{ isset(@errors['passwordMatch']) }}">
+            <span style="color: red">Passwords do not match.</span>
+            <br><br>
+        </check>
+
         <button type="submit" class="btn col-6"
-                style="background-color: rgb(52, 52, 52)">Login!</button>
+                style="background-color: rgb(52, 52, 52)">
+            <check if="{{ isset(@details) }}">
+                {{ @details }}!
+            </check></button>
     </form>
+    <check if="{{ isset(@details) && @details == 'Log in' }}">
+        <p>Don't have an account?
+            <a href="signup">Sign up!</a></p>
+    </check>
+    <check if="{{ isset(@details) && @details == 'Sign up' }}">
+        <p>Already have an account?
+            <a href="login">Log in!</a></p>
+    </check>
 
 </div>
 </body>
