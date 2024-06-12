@@ -67,6 +67,22 @@ class Query {
         return $id;
     }
 
+    function removeUser($attemptingUser, $targetedUser)
+    {
+
+        if($attemptingUser)
+        //Define and Prepare Query
+        $statement = $this->_dbh->prepare(
+            'DELETE FROM SpotifyUser WHERE `name` = :name');
+
+        //Bind parameters
+        $name = $targetedUser->getName();
+        $statement->bindParam(':name', $name);
+        //Execute Insert
+        $statement->execute();
+    }
+
+
 
 }
 
