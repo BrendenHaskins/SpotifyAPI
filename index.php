@@ -33,5 +33,18 @@ $f3->route('GET|POST /defeat', function($f3) {
     $GLOBALS['con']->defeat();
 });
 
+$f3->route('GET|POST /login', function() {
+   $GLOBALS['con']->login();
+});
+
+$f3->route('GET|POST /signup', function() {
+   $GLOBALS['con']->signup();
+});
+
+$f3->route('GET|POST /logout', function() {
+   $GLOBALS['con']->logout();
+});
+
+
 //run fat free
 $f3->run();

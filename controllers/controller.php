@@ -121,6 +121,45 @@ class Controller {
         }
     }
 
+    /**
+     * Brings the user to the login page where they need to login
+     *
+     * @return void
+     */
+    function login() {
+        if($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $this->setBoilerplateContent($this->_f3, 'views/login.html', array());
+        } else {
+            //TODO:Add validation to login before sending them to game
+            $this->_f3->reroute('game');
+        }
+    }
+
+    /**
+     * Brings the user to the signup page where they need to create an account
+     *
+     * @return void
+     */
+    function signup() {
+        //TODO: Rework login view page so it can be dynamic for signup
+        if($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $this->setBoilerplateContent($this->_f3, 'views/login.html', array());
+        } else {
+            //TODO:Add validation to signup before sending them to game
+            $this->_f3->reroute('game');
+        }
+    }
+
+    /**
+     * Logs the user out, destroying the session
+     *
+     * @return void
+     */
+    function logout() {
+        session_destroy();
+        $this->_f3->reroute('/');
+    }
+
     // setting routes to the boilerplate view
     function setBoilerplateContent($f3, string $content, array $styles, array $scripts = array()) : void {
         $f3->set('styles', $styles);
