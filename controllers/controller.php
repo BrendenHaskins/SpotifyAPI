@@ -171,7 +171,9 @@ class Controller {
 
         $this->_f3->set('details', 'Log in');
         //render page
-        $this->setBoilerplateContent($this->_f3, 'views/login.html', array());
+        $this->setBoilerplateContent($this->_f3, 'views/login.html',
+            array(),
+            array('validation.js'));
     }
 
 
@@ -200,7 +202,9 @@ class Controller {
         }
         $this->_f3->set('details', 'Sign up');
         //render page
-        $this->setBoilerplateContent($this->_f3, 'views/login.html', array());
+        $this->setBoilerplateContent($this->_f3, 'views/login.html',
+            array(),
+            array('validation.js'));
     }
 
     function guest() {
