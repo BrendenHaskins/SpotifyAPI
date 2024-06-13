@@ -15,12 +15,19 @@ window.addEventListener("DOMContentLoaded", (event) => {
     }, 1);
     }, true);
 
+    //if results are right-clicked, still shows
     resultsQuerySelector.addEventListener('click',function() {
         setTimeout(() => {
             resultsQuerySelector.style.display = "block";
     }, 1);
     }, true);
 });
+
+/**
+ * checks if the autocomplete matches the selected input
+ *
+ * @param userInput the text the user types
+ */
 function autocompleteMatch(userInput) {
     if (userInput === '') {
         return [];
@@ -36,6 +43,11 @@ function autocompleteMatch(userInput) {
     });
 }
 
+/**
+ * Shows the results of the current input in the text field
+ *
+ * @param val value in box
+ */
 function showResults(val) {
     let res = document.getElementById("result");
     res.innerHTML = '';
@@ -65,12 +77,23 @@ function showResults(val) {
     res.innerHTML = '<ul>' + list + '</ul>';
 }
 
+/**
+ * Automatically inserts the value when clicked
+ *
+ * @param value item clicked
+ */
 function enterValue(value) {
     document.getElementById("guess").value = value;
     document.getElementById("guessingForm").submit();
 }
 
-//probably a useless function, but is there for "bob marley" or something un-capitalized (was useful in testing)
+/**
+ * Capitalizes the first letter of every word
+ * probably a useless function, but is there for "bob marley" or something un-capitalized (was useful in testing)
+ *
+ * @param string input
+ * @returns {string} Capitalized Input
+ */
 function capitalizeFirstLetter(string) {
     let words = string.split(" ");
     let word = "";
