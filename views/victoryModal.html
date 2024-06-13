@@ -1,0 +1,22 @@
+<div class="modal fade" tabindex="-1" id="artistModal">
+    <div class="modal-dialog mx-auto modal-dialog-centered shadow px-4">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close btn-close-white mb-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <h1 class="mx-auto">Your Artist Was...</h1>
+            <div class="modal-body justify-content-center">
+                <div class="img-wrapper">
+                    <img class="shadow mx-2 my-1" src="{{ @SESSION.hiddenIcon }}" alt="Spotify Artist Icon">
+                </div>
+                <h2 class="mt-4 mx-auto text-center">{{ @SESSION.hiddenArtist }}</h2>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a href="game">
+                    <button type="button" class="btn btn-primary">New Round</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

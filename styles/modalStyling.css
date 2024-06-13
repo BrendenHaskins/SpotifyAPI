@@ -1,0 +1,30 @@
+.modal-dialog {
+    max-width: var(--bs-modal-width) !important;
+}
+
+.modal-content {
+    background-color: var(--text-input-gray);
+
+    .modal-header, .modal-footer {
+        border: none;
+    }
+
+    .modal-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .img-wrapper {
+        position: relative;
+        display: block;
+        height: auto;
+        border-radius: 50%;
+    }
+
+    img {
+        width: 160px;
+    }
+
+}

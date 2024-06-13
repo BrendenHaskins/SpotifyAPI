@@ -1,4 +1,13 @@
 <include href="views/navbar.html"></include>
+<include href="views/victoryModal.html"></include>
+<script>
+    window.addEventListener('load', () => {
+        const modal = new bootstrap.Modal(document.getElementById('artistModal'), {
+            keyboard: false
+        });
+        modal.toggle();
+    });
+</script>
 <div class="container text-center my-5">
     <check if="{{ @SESSION.guessCount == 1 }}">
         <true><h1>You guessed correctly on your first try!</h1></true>
@@ -22,4 +31,7 @@
         </repeat>
         </tbody>
     </table>
+    <a href="game">
+        <button type="button" class="btn btn-primary">New Round</button>
+    </a>
 </div>

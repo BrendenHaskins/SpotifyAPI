@@ -111,7 +111,7 @@ class Controller {
         $this->setBoilerplateContent(
             $this->_f3,
             'views/home.html',
-            array('autocomplete.css', 'guessStyles.css'),
+            array('autocomplete.css', 'guessStyles.css', 'modalStyling.css'),
             array('searchautocomplete.js'));
     }
 
@@ -126,7 +126,7 @@ class Controller {
         if($_SERVER['REQUEST_METHOD'] == 'GET') {
             //User got it right.
             $this->_f3->set('leaderboard', $GLOBALS['query']->getLeaderboard());
-            $this->setBoilerplateContent($this->_f3, 'views/victory.html', array());
+            $this->setBoilerplateContent($this->_f3, 'views/victory.html', array('modalStyling.css'));
         }
     }
 
@@ -140,7 +140,7 @@ class Controller {
         }
         if($_SERVER['REQUEST_METHOD'] == 'GET') {
             $this->_f3->set('leaderboard', $GLOBALS['query']->getLeaderboard());
-            $this->setBoilerplateContent($this->_f3, 'views/defeat.html', array());
+            $this->setBoilerplateContent($this->_f3, 'views/defeat.html', array('modalStyling.css'));
         }
     }
 
@@ -171,9 +171,7 @@ class Controller {
 
         $this->_f3->set('details', 'Log in');
         //render page
-        $this->setBoilerplateContent($this->_f3, 'views/login.html',
-            array(),
-            array('validation.js'));
+        $this->setBoilerplateContent($this->_f3, 'views/login.html', array());
     }
 
 
@@ -202,9 +200,7 @@ class Controller {
         }
         $this->_f3->set('details', 'Sign up');
         //render page
-        $this->setBoilerplateContent($this->_f3, 'views/login.html',
-            array(),
-            array('validation.js'));
+        $this->setBoilerplateContent($this->_f3, 'views/login.html', array());
     }
 
     function guest() {

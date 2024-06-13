@@ -13,7 +13,7 @@
     --spotify-gray: #191414;
     --alt-green: #1ED660;
     --alt-primary-gray: #1E1E1E;
-    --text-input-gray: #323232;
+    --text-input-gray: #1f1f1f;
 }
 
 /* Defaulting font choices */
@@ -91,6 +91,10 @@ body {
 nav {
     background-color: rgba(255, 255, 255, 0.1);
     margin: 0 -10px;
+
+    .nav-link {
+        color: rgb(255 255 255 / 64%);;
+    }
 }
 
 input[type="text"], input[type="password"] {

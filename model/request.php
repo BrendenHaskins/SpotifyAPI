@@ -134,10 +134,12 @@ function getHiddenArtistInfo($f3): void {
     $popularity = $secondArray['popularity'];
     $genres = $secondArray['genres'];
     $lookupAPILink = $secondArray['href'];
+    $icon = $secondArray['images'][0]['url'];
 
     $f3->set('SESSION.hiddenPopularity', $popularity);
     $f3->set('SESSION.hiddenGenres', $genres);
     $f3->set('SESSION.hiddenLink', $lookupAPILink);
+    $f3->set('SESSION.hiddenIcon', $icon);
 }
 
 function searchForArtist($artistName, $f3): array {
