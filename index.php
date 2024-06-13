@@ -1,6 +1,5 @@
 <?php
 //controller file
-session_start();
 
 //error reporting
 ini_set('display_errors',1);
@@ -9,6 +8,9 @@ error_reporting(E_ALL);
 //requirements
 require('model/request.php');
 require_once('vendor/autoload.php');
+
+// Start session
+session_start();
 
 //instantiate base F3 base class
 $f3 = Base::instance();

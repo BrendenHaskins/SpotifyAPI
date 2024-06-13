@@ -43,6 +43,40 @@ class Query {
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    function addScore($user) {
+        //GET CURRENT SCORE
+
+        //Define and Prepare Query
+        $statement = $this->_dbh->prepare(
+            'SELECT score FROM SpotifyUser
+                    WHERE `name` = :name
+                    LIMIT 1');
+
+        //bind parameters
+        $name = $user->getName();
+        $statement->bindParam(':name', $name);
+
+        //execute select
+        $statement->execute();
+
+        //return score
+        $currentScore = $statement->fetch(PDO::FETCH_ASSOC);
+
+        //UPDATE SCORE
+        $statement = $this->_dbh->prepare(
+            'UPDATE SpotifyUser SET score = :score
+                     WHERE name = :name;');
+
+        //bind parameters
+        $name = $user->getName();
+        $statement->bindParam(':name', $name);
+        $currentScore['score'] = $currentScore['score']+1;
+        $statement->bindParam(':score', $currentScore['score']);
+
+        //execute select
+        $statement->execute();
+    }
+
     function checkUserName($user) {
         //Define and Prepare Query
         $statement = $this->_dbh->prepare(

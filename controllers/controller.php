@@ -20,6 +20,12 @@ class Controller {
 
     function game() : void {
         if($_SERVER['REQUEST_METHOD'] == 'GET') {
+            //check if logged in
+            if ($this->_f3->exists('SESSION.login')) {
+                $user = $this->_f3->get('SESSION.login');
+            } else {
+                $this->_f3->reroute('login');
+            }
             //reset all session arrays, it's a new game now.
             $this->_f3->set('SESSION.guessCount',0);
             $this->_f3->set('SESSION.priorGuesses',array());
@@ -38,6 +44,12 @@ class Controller {
             selectHiddenArtist($this->_f3);
             getHiddenArtistInfo($this->_f3);
         } else if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            //check if logged in
+            if ($this->_f3->exists('SESSION.login')) {
+                $user = $this->_f3->get('SESSION.login');
+            } else {
+                $this->_f3->reroute('login');
+            }
             //A guess has been submitted.
             getToken($this->_f3);
             getAllArtistsFromSetUrl($this->_f3);
@@ -87,7 +99,7 @@ class Controller {
             $hiddenArtist = $this->_f3->get('SESSION.hiddenArtist');
 
             if($userGuess == $hiddenArtist) {
-                //TODO: Add increment scoring
+                $GLOBALS['query']->addScore($user);
                 $this->_f3->reroute('victory');
             } else {
                 if($newCount == 10) {
@@ -138,7 +150,7 @@ class Controller {
                 //checks if password hash matches
                 $verifyPassword = password_verify($_POST['password'], $result['password']);
                 if($verifyPassword) {
-                    //TODO: Set session to logged in
+                    $this->_f3->set('SESSION.login', $user);
                     $this->_f3->reroute('game');
                 } else {
                     $this->_f3->set('errors["incorrectLogin"]', false);
@@ -170,7 +182,7 @@ class Controller {
                     $this->_f3->set('errors["userExists"]', false);
                 } else {
                     $GLOBALS['query']->insertUser($user);
-                    //TODO: Set session to logged in
+                    $this->_f3->set('SESSION.login', $user);
                     $this->_f3->reroute('game');
                 }
             }
