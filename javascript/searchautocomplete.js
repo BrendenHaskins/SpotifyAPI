@@ -40,6 +40,7 @@ function showResults(val) {
     let res = document.getElementById("result");
     res.innerHTML = '';
     let list = '';
+    let safeArtist = '';
     let artists = autocompleteMatch(val);
     //only show 5 artists
     let size = 5;
@@ -56,7 +57,8 @@ function showResults(val) {
             else return "";
         }
 
-        list += '<li class=" ' + rounding() + '" style="background-color: ' + color + '"> <button onclick="enterValue(\'' + capitalizeFirstLetter(artists[i])
+        safeArtist = (artists[i]).replace(/"/g, '&quot;');
+        list += '<li class=" ' + rounding() + '" style="background-color: ' + color + '"> <button onclick="enterValue(\'' + capitalizeFirstLetter(safeArtist)
             + '\')">' + capitalizeFirstLetter(artists[i]) + '</button> </li>';
     }
     //add the list to a <ul> in results
