@@ -77,30 +77,6 @@
             </div>
         </repeat>
     </div>
-
-
-    <!-- DEBUG FOR DEVELOPER USE PLEASE REMOVE -->
-    <!--TODO: REMOVE THIS WHEN THE GAME IS FINISHED-->
-    <div class="container text-center my-5" style="border: 2px solid black">
-        FOR DEVELOPMENT USE ONLY!
-        <br>
-        Hidden Artist: {{ @SESSION.hiddenArtist }}
-        <br>
-        Popularity: {{ @SESSION.hiddenPopularity }}
-        <br>
-        Genres:
-        <repeat group="{{ @SESSION.hiddenGenres }}" value="{{ @genre }}">
-            {{ strtoupper(@genre) }}
-        </repeat>
-        <br>
-        API Link: {{ @SESSION.hiddenLink }}
-        <br>
-        Arist ID: {{ @SESSION.hiddenArtistID }}
-        <br>
-        Top Song of Hidden Artist: {{ @SESSION.hiddenTopSong }}
-        <br>
-        Controller Operational!
-    </div>
 </div>
 </body>
 </html>
