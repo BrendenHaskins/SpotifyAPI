@@ -35,4 +35,8 @@ Our project shows our common love for music combined with our purusal of a well 
 ## UML Diagram
 <img width="787" alt="Screenshot 2024-06-13 at 10 50 58 AM" src="https://github.com/BrendenHaskins/SpotifyAPI/assets/93852560/eed6d74a-184a-42b4-b2fa-0af1d4d92308">
 
+## Github Commits
+<img width="972" alt="Screenshot 2024-06-13 at 10 55 08 AM" src="https://github.com/BrendenHaskins/SpotifyAPI/assets/93852560/896228b6-7af3-4490-9a0d-2db651dba6a8">
+
+
 
