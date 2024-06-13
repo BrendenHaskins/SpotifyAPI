@@ -41,18 +41,22 @@
                    required>
             <br>
         </check>
+        <span id="passwordError" style="color: red">
         <check if="{{ isset(@errors['password']) }}">
-            <span style="color: red">Invalid password. <br>
-                Includes at least 1 number and 1 a-Z character. <br>
-                Make sure above 8 characters and under 16.</span>
+            Invalid password. <br>
+            Includes at least 1 number and 1 a-Z character. <br>
+            Make sure above 8 characters and under 16.
             <br><br>
         </check>
+        </span>
+        <span id="passwordError2" style="color: red">
         <check if="{{ isset(@errors['passwordMatch']) }}">
-            <span style="color: red">Passwords do not match.</span>
+            Passwords do not match.
             <br><br>
         </check>
+        </span>
 
-        <button type="submit" class="btn col-6"
+        <button id="submitButton" type="submit" class="disabled btn col-6"
                 style="background-color: rgb(52, 52, 52)">
             <check if="{{ isset(@details) }}">
                 {{ @details }}!

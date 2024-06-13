@@ -94,8 +94,9 @@ function verifyForm(submit_button, usernameValid, passwordValid, password2_field
             } else {
                 submit_button.classList.add("disabled");
             }
-        }
+        } else {
         submit_button.classList.remove("disabled");
+        }
     } else {
         submit_button.classList.add("disabled");
     }
