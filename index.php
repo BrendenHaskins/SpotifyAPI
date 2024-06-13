@@ -43,6 +43,10 @@ $f3->route('GET|POST /signup', function() {
    $GLOBALS['con']->signup();
 });
 
+$f3->route('GET|POST /guest', function() {
+   $GLOBALS['con']->guest();
+});
+
 $f3->route('GET|POST /logout', function() {
    $GLOBALS['con']->logout();
 });

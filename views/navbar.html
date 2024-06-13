@@ -11,12 +11,16 @@
         <li class="nav-item">
           <a class="nav-link" href="">About</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="signup">Signup</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="">Guest</a>
-        </li>
+        <check if="{{ !@SESSION.login || @username == 'Guest'}}">
+          <li class="nav-item">
+            <a class="nav-link" href="signup">Signup</a>
+          </li>
+        </check>
+        <check if="{{ !@SESSION.login }}">
+          <li class="nav-item">
+            <a class="nav-link" href="guest">Guest</a>
+          </li>
+        </check>
         <li class="nav-item position-absolute end-0 mx-3">
           <check if="{{ @SESSION.apiStatus }}">
             <false><button class="btn btn-danger" >API Status</button></false>

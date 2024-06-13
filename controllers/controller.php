@@ -19,13 +19,14 @@ class Controller {
     }
 
     function game() : void {
+        //check if logged in
+        if ($this->_f3->exists('SESSION.login')) {
+            $user = $this->_f3->get('SESSION.login');
+            $this->_f3->set('username', $user->getName());
+        } else {
+            $this->_f3->reroute('login');
+        }
         if($_SERVER['REQUEST_METHOD'] == 'GET') {
-            //check if logged in
-            if ($this->_f3->exists('SESSION.login')) {
-                $user = $this->_f3->get('SESSION.login');
-            } else {
-                $this->_f3->reroute('login');
-            }
             //reset all session arrays, it's a new game now.
             $this->_f3->set('SESSION.guessCount',0);
             $this->_f3->set('SESSION.priorGuesses',array());
@@ -44,12 +45,6 @@ class Controller {
             selectHiddenArtist($this->_f3);
             getHiddenArtistInfo($this->_f3);
         } else if($_SERVER['REQUEST_METHOD'] == 'POST') {
-            //check if logged in
-            if ($this->_f3->exists('SESSION.login')) {
-                $user = $this->_f3->get('SESSION.login');
-            } else {
-                $this->_f3->reroute('login');
-            }
             //A guess has been submitted.
             getToken($this->_f3);
             getAllArtistsFromSetUrl($this->_f3);
@@ -99,7 +94,9 @@ class Controller {
             $hiddenArtist = $this->_f3->get('SESSION.hiddenArtist');
 
             if($userGuess == $hiddenArtist) {
-                $GLOBALS['query']->addScore($user);
+                if ($user->getName() != 'Guest') {
+                    $GLOBALS['query']->addScore($user);
+                }
                 $this->_f3->reroute('victory');
             } else {
                 if($newCount == 10) {
@@ -119,6 +116,13 @@ class Controller {
     }
 
     function victory() : void {
+        //check if logged in
+        if ($this->_f3->exists('SESSION.login')) {
+            $user = $this->_f3->get('SESSION.login');
+            $this->_f3->set('username', $user->getName());
+        } else {
+            $this->_f3->reroute('login');
+        }
         if($_SERVER['REQUEST_METHOD'] == 'GET') {
             //User got it right.
             $this->_f3->set('leaderboard', $GLOBALS['query']->getLeaderboard());
@@ -127,6 +131,13 @@ class Controller {
     }
 
     function defeat() : void {
+        //check if logged in
+        if ($this->_f3->exists('SESSION.login')) {
+            $user = $this->_f3->get('SESSION.login');
+            $this->_f3->set('username', $user->getName());
+        } else {
+            $this->_f3->reroute('login');
+        }
         if($_SERVER['REQUEST_METHOD'] == 'GET') {
             $this->_f3->set('leaderboard', $GLOBALS['query']->getLeaderboard());
             $this->setBoilerplateContent($this->_f3, 'views/defeat.html', array());
@@ -190,6 +201,12 @@ class Controller {
         $this->_f3->set('details', 'Sign up');
         //render page
         $this->setBoilerplateContent($this->_f3, 'views/login.html', array());
+    }
+
+    function guest() {
+        $guest = new User("Guest");
+        $this->_f3->set('SESSION.login', $guest);
+        $this->_f3->reroute('game');
     }
 
     /**

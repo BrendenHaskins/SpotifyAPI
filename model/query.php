@@ -19,8 +19,8 @@ class Query {
             //echo 'Connected to database!!';
         }
         catch (PDOException $e) {
-            die( $e->getMessage() );
-            //die("<p>Something went wrong!</p>");
+            //die( $e->getMessage() );
+            die("<p>Something went wrong!</p>");
         }
     }
 
