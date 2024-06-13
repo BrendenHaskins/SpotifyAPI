@@ -47,3 +47,32 @@
     /*These need to be the same*/
     height: 80px;
 }
+
+/*Coloring for specific card classes*/
+#guessCard div:has(.partial):not(:first-child),
+#guessCard div:has(.less):not(:first-child),
+#guessCard div:has(.more):not(:first-child){
+    background: var(--gradient-halfright-answer);
+}
+
+#guessCard div:has(.incorrect):not(:first-child) {
+    background: var(--gradient-wrong-answer);
+}
+
+#guessCard div:has(.partial):not(:first-child) {
+    background: var(--gradient-halfright-answer);
+}
+
+#guessCard div:has(.equal):not(:first-child) {
+    background: var(--gradient-halfright-answer);
+}
+
+#guessCard div:has(.less):not(:first-child) .popularityArrow:before{
+    content: url(../images/arrow-up.svg);
+    color: white;
+}
+
+#guessCard div:has(.more):not(:first-child) .popularityArrow:before{
+    content: url(../images/arrow-down.svg);
+    color: white;
+}

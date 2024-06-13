@@ -101,9 +101,9 @@ class Controller {
             } else {
                 if($newCount == 10) {
                     $this->_f3->reroute('defeat');
-                } else if($newCount == 5) {
+                } else if($newCount == 3) {
                     $this->_f3->set('SESSION.songHint', $this->_f3->get('SESSION.hiddenTopSong'));
-                } else if($newCount == 8) {
+                } else if($newCount == 6) {
                     $this->_f3->set('SESSION.photoHint', $this->_f3->get('SESSION.hiddenPhotoURL'));
                 }
             }

@@ -2,8 +2,16 @@
 
 /*
  * Validate the signup and login form
+ *
+ * Also includes color logic for guesses
  */
 class Validate {
+
+    private $_f3; // f3 router
+
+    function __construct($f3) {
+        $this->_f3 = $f3;
+    }
 
     /**
      * Checks if name is greater than 3 and less than 100
@@ -65,6 +73,33 @@ class Validate {
         //checks if both passwords match
         if ($_POST['password'] != $_POST['password2']) {
             $f3->set('errors["passwordMatch"]', false);
+        }
+    }
+
+    /**
+     * @param $f3
+     * @param $value
+     *      value for guess column
+     * @return string
+     *      class to apply via value logic
+     */
+    static function applyValidColoring($f3, $value) {
+        if (is_numeric($value)) {
+            $value = (int) $value;
+            $popularity = $f3->get('SESSION.hiddenPopularity');
+            if ($popularity > $value) {
+                return 'less';
+            } else if ($popularity < $value) {
+                return 'more';
+            } else {
+                return 'equal';
+            }
+        } else {
+            if (empty($value)) {
+                return 'incorrect';
+            } else {
+                return 'partial';
+            }
         }
     }
 }

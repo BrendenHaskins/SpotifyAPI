@@ -1,3 +1,7 @@
+/**
+Styling for Hint Screen
+ */
+
 #hintScreen {
     background-color: var(--spotify-green);
     min-height: 10rem;

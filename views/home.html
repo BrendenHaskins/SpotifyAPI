@@ -46,10 +46,10 @@
             </div>
         </div>
         <repeat group="{{ @SESSION.artistArrays }}" value="{{ @artistArr }}">
-            <div id="guessCard" class="d-flex align-items-center justify-content-evenly mb-3">
+            <div id="guessCard" class="d-flex align-items-center justify-content-evenly mb-4">
                 <repeat group="{{ @artistArr }}" key="{{ @key }}" value="{{ @val }}">
                     <div class="shadow text-center align-content-center rounded">
-                        <span class="my-auto d-inline-block">
+                        <span class="my-auto d-inline-block {{ Validate::applyValidColoring(@GLOBALS['f3'], @val) }}">
                             <check if="{{ @key == 'Genres' }}">
                             <true>
                                 <check if="{{ empty(@val) }}">
@@ -57,7 +57,19 @@
                                     <false>{{ implode(', ', @val) }}</false>
                                 </check>
                             </true>
-                            <false>{{ @val }}</false>
+                            <false></false>
+                            <check if="{{ @key == 'Popularity' }}">
+                                <true>
+                                    <span class="d-flex flex-column justify-content-evenly align-items-center">
+                                        <span class="d-block mb-1">{{ @val }}</span>
+                                        <span class="d-block popularityArrow"></span>
+                                    </span>
+                                </true>
+                                <false></false>
+                            </check>
+                            <check if="{{ @key == 'Name' }}">
+                                {{ @val }}
+                            </check>
                         </check>
                         </span>
                     </div>
